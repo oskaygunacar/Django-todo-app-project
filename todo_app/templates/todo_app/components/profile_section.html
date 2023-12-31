@@ -1,0 +1,17 @@
+{% load thumbnail %}
+<div class="row">
+    <div class="col-sm-6 offset-sm-3 border p-2">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="col-sm-6 offset-sm-3">
+                    by <a href="{{todo.user.profile.get_abso_url}}" class="mb-2">{{todo.user.username}}</a>
+                    <img class="ms-2 rounded-circle" src="{{todo.user.profile.avatar|thumbnail_url:'micro-avatar'}}" alt="">
+                </div>
+            </div>
+            <hr>
+            <div class="col-sm-12">
+                {{todo.user.profile.description}}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+{% load thumbnail %}
+<header>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary p-3 mb-5 mt-1">
+            <div class="container">
+              <a class="navbar-brand" href="/">Todo App</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                  {% if user.is_authenticated %}
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Categories
+                    </a>
+                    <ul class="dropdown-menu">
+                      {% for cat in categories %}
+                      <li><a class="dropdown-item" href="{{cat.get_abso_url}}">{% if cat.user == request.user %} {{cat.title}} {% endif %}</a></li>
+                      {%endfor%}
+                    </ul>
+                  </li>
+                  <li>
+                    <a href="{%url 'todo_app:create_category'%}"class="nav-link">Create New Category</a>
+                  </li>
+                  <li>
+                    <a href="{%url 'todo_app:todo_entry'%}"class="nav-link">Create New Todo</a>
+                  </li>
+                  {%endif%}
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                  {# Account Login - Logout Navigasyon #}
+                  {% if not user.is_authenticated %}
+                  <li>
+                    <a href="{%url 'signup'%}" class="nav-link"> Sign-up</a>
+                  </li>
+                    <li>
+                      <a href="{%url 'login' %}" class="nav-link">Sign in</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                          <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5"/>
+                          <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                          </svg> Account
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{request.user.profile.get_abso_url}}">Profile</a></li>
+                      </ul>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{%url 'logout' %}" class="nav-link">Logout</a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+        </nav>
+    </div>
+</header>

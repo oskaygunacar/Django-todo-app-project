@@ -1,0 +1,29 @@
+{% extends 'base.html'%}
+ 
+
+
+{# The page that you list all your todo's  #}
+
+{%block content%}
+    <div class="container">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <strong>{{ message }} </strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% include 'todo_app/components/todo_list.html' %}
+
+        <hr class="my-5">
+
+        {%include 'todo_app/components/completed_tasks.html' %}
+
+    </div>
+
+{%endblock content%}
+
+

@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+{% load crispy_forms_tags %}
+
+
+{%block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <h1>{{title}}</h1>
+            <form method="post" action="">
+                {% csrf_token %}
+                {{ form|crispy }}
+                {{form.media}}
+                <button class="btn btn-primary" type="submit">{{button_info}}</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{# {%if request.path == '/todo/new-todo/'%} #}
+{% include 'components/tagify.html' with input_name='tag' %}
+
+
+{%endblock%}

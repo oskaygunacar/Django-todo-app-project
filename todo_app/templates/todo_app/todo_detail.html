@@ -1,0 +1,54 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-sm-6 offset-sm-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{%url 'todo_app:home'%}">Home</a></li>
+                  {%if todo.category %}<li class="breadcrumb-item"><a href="{{todo.category.get_abso_url}}">{{todo.category.title}}</a></li> {%endif%}
+                  <li class="breadcrumb-item active" aria-current="page">{{todo.title}}</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="col-sm-6 offset-sm-3">
+            <div class="row">
+                <div class="col-sm-6 offset-sm-3">
+                    <a href="/todo/edit/{{todo.slug}}/"><li class="list-inline-item"><span class="badge rounded-pill text-bg-light">Edit</span></li></a>
+                    <a href="/todo/delete/{{todo.slug}}/"><li class="list-inline-item"><span class="badge rounded-pill text-bg-warning">Delete</span></li></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <h1>{{todo.title}}</h1>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <strong>{{ message }} </strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="col-sm-12 mt-3">
+            {{todo.content|safe}}
+        </div>
+        <div class="col-sm-12 mt-3">
+            <ul class="list-inline">
+                {%if todo.tag%}
+                    {% for tag in todo.tag.all%}
+                        <a href="{{tag.get_abso_url}}"><li class="list-inline-item"><span class="badge rounded-pill text-bg-warning">{{tag.title}}</span></li></a>
+                    {%endfor%}
+                {%endif%}
+            </ul>
+        </div>
+        <div class="col-sm-12 mt-3">
+            {% include 'todo_app/components/profile_section.html' %}
+        </div>
+    </div>
+</div>
+
+{%endblock%}
+

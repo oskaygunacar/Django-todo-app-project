@@ -1,0 +1,48 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3 text-center">
+            <div class="row">
+                <div class="col-sm-6 offset-sm-3">
+                    <a href="/category/edit/{{category.slug}}/"><li class="list-inline-item"><span class="badge rounded-pill text-bg-light">Edit</span></li></a>
+                    <a href="/category/delete/{{category.slug}}/"><li class="list-inline-item"><span class="badge rounded-pill text-bg-warning">Delete</span></li></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 offset-sm-3 mt-1 mb-3 text-center">
+            {% if category %}
+                <h1>{{category.title}} - ({{todos.count}})</h1>
+            {%elif tag %}
+                <h1>{{tag.title}} - ({{todos.count}})</h1>
+            {%endif%}
+        </div>
+        <div class="col-sm-12 align-item-center ">
+            <ul class="list-group">
+                <div class="row">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                <strong>{{ message }} </strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="col-sm-6 offset-sm-3">
+                        {%for todo in todos%}
+                            <li class="list-group-item list-group-item-action text-center" aria-current="true">
+                                <a href="{{todo.get_abso_url}}" style="text-decoration: none;">
+                                    <input type="checkbox" name="checkbox" value="{{todo.title}}" class="mx-2"> {{todo.title}}
+                                </a>
+                            </li>
+                        {%endfor%}
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{%endblock content%}

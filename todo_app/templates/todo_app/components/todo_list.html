@@ -1,0 +1,36 @@
+<!-- Todo_list start -->
+<form action="{%url 'todo_app:complete_todo'%}" method="POST">
+    {%csrf_token%}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="text-light text-center">To-do List</h1>
+        </div>
+        <div class="col-sm-12 align-item-center ">
+            <ul class="list-group">
+                <div class="row">
+                    <div class="col-sm-6 offset-sm-3">
+                        {%for todo in todos%}
+                            <li class="list-group-item list-group-item-action text-center" aria-current="true">
+                                <a href="{{todo.get_abso_url}}" style="text-decoration: none;">
+                                    <input type="checkbox" name="checkbox" value="{{todo.title}}" class="mx-2"> 
+                                    {{todo.title}} 
+                                    {%if todo.category%}
+                                    <button class="btn btn-secondary py-1 px-2 mx-3">
+                                        <a class="link-light link-underline-opacity-0" href="{{todo.category.get_abso_url}}"> {{todo.category}} </a>
+                                    </button>
+                                    {%endif%}
+                                </a>
+                            </li>
+                        {%endfor%}
+                    </div>
+                </div>
+            </ul>
+        </div>
+        <div class="col-sm-6 offset-sm-3">
+            <button class="mt-3 btn btn-light" type="submit">
+                Update
+            </button>
+        </div>
+    </div>
+</form>
+<!-- Todo_list ends -->
