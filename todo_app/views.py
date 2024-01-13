@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 #forms
 from .forms import UserForm, ProfileModelForm, TodoModelForm, CategoryModelForm
 
-
+from django.views.generic.base import RedirectView
 
 # Create your views here.
 
@@ -188,6 +188,8 @@ def logout_view(request):
         logout(request)
         return redirect(reverse('logout'))
     else:
+        if request.META.get('HTTP_REFERER'):
+            return redirect(request.META['HTTP_REFERER'])
         return redirect('todo_app:home')
     
 
@@ -195,9 +197,11 @@ def logout_view(request):
 def signup_view(request):
     form = UserForm(request.POST or None)
     if form.is_valid(): # if form is not valid then view works like get request.
-        form_user = form.save() # returns User object -> Thanks to UserForm
+        password = form.cleaned_data.get('password')
+        form_user = form.save(commit=False) # returns User object -> Thanks to UserForm
+        form_user.set_password(password)
+        form_user.save()
         Profile.objects.create(user=form_user)
-        login(request,form_user)
         messages.success(request, 'You registration is succesfully completed !')
         return redirect('todo_app:home')
 
@@ -231,23 +235,16 @@ def profile_edit_view(request):
 # Delete Account
 @login_required(login_url='/login/')
 def delete_account_view(request):
-    print('User Info: ', request.user, type(request.user))
     user = get_object_or_404(User, username=request.user.username)
-    random_int = random.randint(2500,10000)
     if request.method == 'POST':
-        if request.POST.get('number') == random_int:
+        if request.POST.get('number') and request.POST.get('number') == request.session['random_int']:
             user.delete()
             messages.warning(request, 'Your Account Has Been Deleted :(')
-            redirect('todo_app:home')
+            return redirect('todo_app:home')
         else:
             messages.info(request, 'Wrong validation number. Please check the number above and try again.')
+    random_int = random.randint(2500,10000)
+    request.session['random_int'] = random_int
     context = dict(user=user, random_int=random_int)
     return render(request, 'registration/delete.html', context=context)
     
-
-
-
-
-
-
-

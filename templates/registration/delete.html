@@ -24,7 +24,7 @@
         <div class="col-sm-6 offset-sm-3">
             <form action="/profile/delete-account/" method="POST">
                 {% csrf_token %}
-                <input type="number" name="number" class="form-control">
+                <input type="number" name="number" class="form-control" required>
                 <button type="submit" class="btn btn-primary mt-3">
                     Submit
                 </button>

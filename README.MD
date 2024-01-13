@@ -10,3 +10,47 @@ Features
 - Todo Management: Users can create, edit, and delete their todos and categorize them for better organization.
 - Detailed Todo View: Each todo has a detail page showing the author, title, content, and options to edit or delete.
 - Responsive Design: The application is fully responsive and accessible on various devices and screen sizes.
+
+## Project Setup
+
+Follow these steps to set up the project:
+
+**Step 1**: Clone the project
+```bash
+git clone https://github.com/oskaygunacar/Django-todo-app-project.git
+```
+
+**Step 2**: Navigate to the directory
+```bash
+cd Django-todo-app-project
+```
+
+**Step 3**: Create and activate a virtual environment
+```bash
+# Create
+python -m venv env
+
+# Activate for MacOS & Linux
+source env/bin/activate
+
+# Activate for Windows
+env\Scripts\activate
+```
+
+**Step 4**: Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+**Step 5**: Migrate the database and create a superuser
+```bash
+python manage.py migrate
+python manage.py createsuperuser
+```
+
+**Step 6**: Run the server
+```bash
+python manage.py runserver
+```
+
+After completing these steps, you should be able to access the project by visiting `127.0.0.1:8000` in your browser.
