@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from todo_app.models import Todo, Category, Tag, Profile
+from todo_app.models import Todo, Category, Profile
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 import json
@@ -32,15 +32,9 @@ def todo_entry_view(request):
     form.fields['category'].queryset = Category.objects.filter(user=request.user)
     context = dict(form=form, title='New Todo', button_info='Save')
     if form.is_valid():
-        tags = json.loads(form.cleaned_data.get('tag')) if form.cleaned_data.get('tag') else None
         form = form.save(commit=False)
         form.user = request.user
         form.save()
-        if tags:
-            for tag in tags:
-                tag_item, created = Tag.objects.get_or_create(user=request.user, title=tag.get('value').lower(), is_active=True)
-                form.tag.add(tag_item)
-            return redirect(reverse('todo_app:todo_view', kwargs={'todo_slug':form.slug}))
         return redirect(reverse('todo_app:todo_view', kwargs={'todo_slug':form.slug}))
     return render(request, 'registration/form.html', context=context)
 
@@ -79,20 +73,7 @@ def edit_todo_view(request, todo_slug):
     form.fields['category'].queryset = Category.objects.filter(user=request.user)
     context = dict(form=form, title='Edit Todo', button_info='Save')
     if form.is_valid():
-        tags = json.loads(form.cleaned_data.get('tag')) if form.cleaned_data.get('tag') else None
-        print('JSON: ',tags)
-        form = form.save(commit=False) # boş form Modeli oluşturuyoruz ancak veritabanına save almıyoruz.
         form.save() # formu değil artık objeyi kaydediyoruz.
-        if tags:
-            form.tag.all().delete()
-            for tag in tags:
-                print("print tag section: ", tag)
-                tag_item, created = Tag.objects.get_or_create(user=request.user, title=tag.get('value').lower(), is_active=True)
-                print('tag_item: ', tag_item)
-                form.tag.add(tag_item)
-            messages.success(request,"You've succesfully edited your Todo.")
-            return redirect(reverse('todo_app:todo_view', kwargs={'todo_slug':todo_slug}))
-        form.tag.all().delete()
         messages.success(request,"You've succesfully edited your Todo.")
         return redirect(reverse('todo_app:todo_view', kwargs={'todo_slug':todo_slug}))
     return render(request, 'registration/form.html', context=context)
@@ -147,14 +128,6 @@ def category_detail_view(request, category_slug):
      todos = Todo.objects.filter(is_active=True, category=category, user=request.user)
      context = dict(category=category, todos=todos)
      return render(request, 'todo_app/category_detail.html', context)
-
-# tag detail
-@login_required(login_url='/login/')
-def tag_detail(request, tag_slug):
-     tag = get_object_or_404(Tag, slug=tag_slug, user=request.user)
-     todos = tag.todo_set.all() # alınan tag ile alakalı bütün bağlantılı objeleri getiriyoruz.
-     context = dict(tag=tag,todos=todos)
-     return render(request, 'todo_app/category_detail.html', context)     # category detail sayfasıyla aynı HTML'i kullanıyoruz.
      
      
 # login

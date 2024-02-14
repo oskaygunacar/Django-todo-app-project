@@ -9,10 +9,12 @@ django-crispy-forms==2.1
 django-extensions==3.2.3
 django-summernote==0.8.20.0
 django-tinymce==3.6.1
+djangorestframework==3.14.0
 easy-thumbnails==2.8.5
 executing==2.0.1
 ipython==8.19.0
 jedi==0.19.1
+Markdown==3.5.2
 matplotlib-inline==0.1.6
 parso==0.8.3
 pexpect==4.9.0
@@ -22,6 +24,7 @@ ptyprocess==0.7.0
 pure-eval==0.2.2
 Pygments==2.17.2
 python-slugify==8.0.1
+pytz==2024.1
 six==1.16.0
 slugify==0.0.1
 sqlparse==0.4.4

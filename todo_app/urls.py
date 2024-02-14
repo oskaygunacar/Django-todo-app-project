@@ -4,7 +4,6 @@ from todo_app import views
 app_name = "todo_app"
 
 urlpatterns = [
-    path("tag/<slug:tag_slug>/", views.tag_detail, name="tag_detail"),
     path('category/edit/<slug:category_slug>/', views.edit_category_view, name="category_edit"),
     path('category/delete/<slug:category_slug>/', views.delete_category_view, name="delete_category"),
     path("category/<slug:category_slug>/", views.category_detail_view, name="category_detail"),

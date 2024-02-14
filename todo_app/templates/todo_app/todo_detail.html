@@ -36,15 +36,6 @@
             {{todo.content|safe}}
         </div>
         <div class="col-sm-12 mt-3">
-            <ul class="list-inline">
-                {%if todo.tag%}
-                    {% for tag in todo.tag.all%}
-                        <a href="{{tag.get_abso_url}}"><li class="list-inline-item"><span class="badge rounded-pill text-bg-warning">{{tag.title}}</span></li></a>
-                    {%endfor%}
-                {%endif%}
-            </ul>
-        </div>
-        <div class="col-sm-12 mt-3">
             {% include 'todo_app/components/profile_section.html' %}
         </div>
     </div>

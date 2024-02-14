@@ -34,22 +34,9 @@ class Category(BaseModel):
             }
         )
 
-class Tag(BaseModel):
-    
-    def __str__(self):
-        return self.title
-
-    def get_abso_url(self):
-        return reverse(
-            'todo_app:tag_detail',
-            kwargs={
-                "tag_slug": self.slug
-            }
-        )
 
 class Todo(BaseModel):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    tag = models.ManyToManyField(Tag)
     content = tinymce_models.HTMLField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
