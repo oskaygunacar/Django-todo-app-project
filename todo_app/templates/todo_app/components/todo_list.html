@@ -12,7 +12,7 @@
                         {%for todo in todos%}
                             <li class="list-group-item list-group-item-action text-center" aria-current="true">
                                 <a href="{{todo.get_abso_url}}" style="text-decoration: none;">
-                                    <input type="checkbox" name="checkbox" value="{{todo.title}}" class="mx-2"> 
+                                    <input onchange="updateTodo(this)" type="checkbox" name="checkbox" value="{{todo.title}}" class="mx-2"> 
                                     {{todo.title}} 
                                     {%if todo.category%}
                                     <button class="btn btn-secondary py-1 px-2 mx-3">
