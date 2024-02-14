@@ -5,6 +5,8 @@ from tinymce import models as tinymce_models
 from django.urls import reverse
 import random, string
 
+from django.utils.timezone import localtime
+
 from slugify import slugify
 
 # Base model
@@ -54,6 +56,12 @@ class Todo(BaseModel):
     
     class Meta:
         ordering = ('created_at',)
+
+    def formatted_created_at(self):
+        return localtime(self.created_at).strftime('%Y-%m-%d %H:%M')
+
+    def formatted_updated_at(self):
+        return localtime(self.updated_at).strftime('%Y-%m-%d %H:%M')
 
 
 class Images(models.Model):

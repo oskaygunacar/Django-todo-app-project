@@ -5,8 +5,8 @@ from todo_app.models import Todo, Category, Images, Profile
 # Register your models here.
 
 class TodoAdmin(admin.ModelAdmin):
-    list_display = ["id", "category", "title", "slug", "content", "is_active",]
-    list_display_links = ["id", "category", "title", "slug", "content", "is_active",]
+    list_display = ["id", 'user', "category", "title", "slug", "content", "is_active",]
+    list_display_links = ["id", 'user', "category", "title", "slug", "content", "is_active",]
     # summernote_fields = ("content",)
 
 class CategoryAdmin(admin.ModelAdmin):

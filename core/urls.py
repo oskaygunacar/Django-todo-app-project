@@ -24,6 +24,7 @@ urlpatterns = [
     path('login/', views.login_view, name="login"),
     path("logout/", views.logout_view, name='logout'),
     path("signup/", views.signup_view, name='signup'),
+    path('api/', include('api.urls')),
     path("admin/", admin.site.urls),
     path("", include('todo_app.urls')),
     path('tinymce/', include('tinymce.urls')),
