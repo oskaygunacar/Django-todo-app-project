@@ -6,6 +6,7 @@ class TodoSerializer(serializers.ModelSerializer):
     updated_time = serializers.SerializerMethodField()
     # category = serializers.SerializerMethodField()
     user = serializers.SerializerMethodField()
+    api_detail_url = serializers.HyperlinkedIdentityField(view_name='api:todo_detail_view', lookup_field='id')
 
     class Meta:
         model = Todo
