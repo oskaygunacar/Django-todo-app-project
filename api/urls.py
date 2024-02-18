@@ -1,5 +1,6 @@
 from django.urls import path
 from api import views
+from rest_framework.authtoken.views import obtain_auth_token
 
 app_name = 'api'
 
@@ -14,4 +15,6 @@ urlpatterns = [
     path('category/<int:id>/', views.CategoryDetailView.as_view(), name='category_detail_view'), # detail
     path('category/<int:id>/delete/', views.CategoryDeleteView.as_view(), name='category_delete_view'), # delete category
     path('category/<int:id>/update/', views.CategoryUpdateView.as_view(), name='category_update_view'), # update category
+    # tokenization
+    path('token/', obtain_auth_token, name='api_create_and_get_token'),
 ]
