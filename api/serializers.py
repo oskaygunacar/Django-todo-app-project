@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from todo_app.models import Category, Todo
+from rest_framework.reverse import reverse
 
 class TodoSerializer(serializers.ModelSerializer):
     created_time = serializers.SerializerMethodField()
@@ -8,13 +9,14 @@ class TodoSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
     api_detail_url = serializers.HyperlinkedIdentityField(view_name='api:todo_detail_view', lookup_field='id')
     api_delete_url = serializers.HyperlinkedIdentityField(view_name='api:todo_destroy_view', lookup_field='id')
+    api_update_url = serializers.HyperlinkedIdentityField(view_name='api:todo_update_view', lookup_field='id')
 
     class Meta:
         model = Todo
         exclude = ['created_at', 'updated_at']
 
         """
-        Method belows updating the customized fields above. def get_<field_name>() structure.
+        Method belows updating the customized SerializerMethodFields above. def get_<field_name>() structure.
         """
 
     def get_created_time(self, obj):
@@ -38,6 +40,8 @@ class TodoSerializer(serializers.ModelSerializer):
     
 class CategorySerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
+    api_category_detail = serializers.HyperlinkedIdentityField(view_name='api:category_detail_view', lookup_field='id')
+    category_detail_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
@@ -45,3 +49,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
     def get_user(self,obj):
         return obj.user.username
+    
+    def get_category_detail_url(self,obj):
+        return reverse('todo_app:category_detail', kwargs={'category_slug':obj.slug})

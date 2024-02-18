@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'rest_framework',
+    'rest_framework.authtoken',
     'api',
     'tinymce',
     'django_extensions',
@@ -149,20 +150,6 @@ TINYMCE_DEFAULT_CONFIG = {
     'fontsize_formats': '8pt 10pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 36pt 40pt 42pt 48pt 52pt 64pt',
 }
 
-"""
-DONE:New todo section
-DONE:Delete Account
-DONE:Edit 'todo'
-DONE:DELETE todo
-DONE:Create New Category Page
-DONE:Make Category Model Title Unique
-DONE: Edit and Delete Category Functionality
-TODO:Fix Tag Bug
-TODO:Forget Password Page
-
-
-"""
-
 #Crispy
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
@@ -174,4 +161,13 @@ THUMBNAIL_ALIASES = {
         'micro-avatar': {'size': (40, 40), 'crop': True},
         'page': {'size': (800, 300), 'crop': True},
     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
 }
