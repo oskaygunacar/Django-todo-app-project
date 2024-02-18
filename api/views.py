@@ -1,4 +1,4 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, DestroyAPIView
 
 # rest methods
 from rest_framework.response import Response
@@ -19,6 +19,9 @@ from rest_framework import authentication
 from todo_app.models import Todo, Category
 
 
+# VIEWS
+
+### Todos
 class TodoListCreateView(ListCreateAPIView):
     serializer_class = TodoSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -42,10 +45,27 @@ class TodoDetailView(RetrieveAPIView):
             return obj
         else:
             raise NotFound({'info':'Todo not found!'})
+        
+class TodoDestroyView(DestroyAPIView):
+    serializer_class = TodoSerializer
+    lookup_field = 'id'
+    queryset = Todo.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
 
+    def delete(self, request, *args, **kwargs):
+        id = self.kwargs.get('id')
+        item_to_delete = Todo.objects.filter(pk=id, user=request.user).first()
+        if item_to_delete:
+            item_to_delete.delete()
+            return Response({'Info':'Item Succesfully Deleted', 'status':'200'}, status=status.HTTP_200_OK)
+        return Response({'Info':'Item not found', 'status':'404'}, status=status.HTTP_404_NOT_FOUND)
+        
+
+        
+
+        
 
 ### Category
-
 class CategoryListCreateView(ListCreateAPIView):
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticated]

@@ -7,6 +7,7 @@ class TodoSerializer(serializers.ModelSerializer):
     # category = serializers.SerializerMethodField()
     user = serializers.SerializerMethodField()
     api_detail_url = serializers.HyperlinkedIdentityField(view_name='api:todo_detail_view', lookup_field='id')
+    api_delete_url = serializers.HyperlinkedIdentityField(view_name='api:todo_destroy_view', lookup_field='id')
 
     class Meta:
         model = Todo
