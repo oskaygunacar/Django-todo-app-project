@@ -11,7 +11,7 @@ Features
 - Todo Management: Users can create, edit, and delete their todos and categorize them for better organization.
 - Detailed Todo View: Each todo has a detail page showing the author, title, content, and options to edit or delete.
 - Responsive Design: The application is fully responsive and accessible on various devices and screen sizes.
-- REST API: The application includes REST API. Every user can use api and create, update, delete, list both todos and todo categories via api. Once user created, their token automatically created to use REST API. Client need to use tokens to use api.
+- REST API: The application includes REST API. Every user can use api and create, see detail, update, delete, list both todos and todo categories via api. Once user created, their token automatically created to use REST API. Client need to use tokens to use api.
 
 
 ## Todo Rest API Endpoints
